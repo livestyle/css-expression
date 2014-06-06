@@ -1,0 +1,30 @@
+{
+  "name": "css-expression",
+  "version": "0.0.0",
+  "description": "Expression parser and evaluator for CSS preprocessors",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:emmetio/css-expression.git"
+  },
+  "keywords": [
+    "css",
+    "expression"
+  ],
+  "author": "Sergey Chikuyonok <serge.che@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/emmetio/css-expression/issues"
+  },
+  "homepage": "https://github.com/emmetio/css-expression",
+  "devDependencies": {
+    "mocha": "^1.20.1"
+  },
+  "dependencies": {
+    "lodash": "^2.4.1",
+    "string-stream": "git+https://github.com/emmetio/string-stream.git#v1.0.0"
+  }
+}
