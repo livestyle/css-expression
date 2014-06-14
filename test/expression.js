@@ -50,17 +50,19 @@ describe('CSS Expression', function() {
 		assert.equal(e('3 + @border-color', ctx), '#141414');
 	});
 
-	// it.only('should invoke functions', function() {
-	// 	var ctx = new Context({
-	// 		'foo': function(num) {
-	// 			return num.value * 3;
-	// 		}
-	// 	});
+	it('should invoke functions', function() {
+		var ctx = new Context({
+			'foo': function(num) {
+				return num.value * 3;
+			}
+		});
 
-	// 	assert.equal(e('4 + foo(5)', ctx), '19');
-	// 	assert.equal(e('4 + foo(5, 6)', ctx), '19');
+		assert.equal(e('4 + foo(5)', ctx), '19');
+		assert.equal(e('4 + foo(5, 6)', ctx), '19');
 
-	// 	// assert.equal(e('bar(5, foo)', ctx), 'bar(5, foo)');
-	// 	// assert.equal(e('foo', ctx), 'foo');
-	// });
+		// for unknown function should return 
+		// function expression with resolved arguments
+		// assert.equal(e('bar(5, foo)', ctx), 'bar(5, foo)');
+		// assert.equal(e('foo', ctx), 'foo');
+	});
 });
