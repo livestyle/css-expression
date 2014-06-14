@@ -1,5 +1,6 @@
 var assert = require('assert');
 var e = require('../index');
+var Context = require('../lib/context');
 
 describe('CSS Expression', function() {
 	it('should evaluate simple math expressions', function() {
@@ -12,6 +13,13 @@ describe('CSS Expression', function() {
 		assert.equal(e('((1 + 2) * 3) / 9'), 1);
 		assert.equal(e('-3 + 2'), -1);
 		assert.equal(e('6 / -2'), -3);
+
+		assert.equal(e('1'), 1);
+		assert.equal(e('1 + 2 * 4'), 9);
+		assert.equal(e('1em'), '1em');
+		assert.equal(e('1em + 2'), '3em');
+		assert.equal(e('1em + 2px'), '3em');
+		assert.equal(e('100% / 4'), '25%');
 	});
 
 	it('should evaluate colors', function() {
@@ -20,5 +28,39 @@ describe('CSS Expression', function() {
 		assert.equal(e('#111 > #222'), false);
 		assert.equal(e('#111 + 2'), '#131313');
 		assert.equal(e('#111 + 22'), '#272727');
+
+		assert.equal(e('#555 + 2'), '#575757');
+		assert.equal(e('#fff + 2'), '#ffffff');
+		assert.equal(e('#111 + #222'), '#333333');
+		assert.equal(e('3 * #111'), '#333333');
 	});
+
+	it('should work with variables', function() {
+		var ctx = new Context({
+			'@a': 2, '@b': 4,
+			'$a': 2, '$b': 4,
+			'@c': '@a + @b',
+			'@border-color': '#111'
+		});
+
+		assert.equal(e('@a + @b', ctx), 6);
+		assert.equal(e('@c * 2', ctx), 12);
+		assert.equal(e('1 + @a * @b', ctx), 9);
+		assert.equal(e('1 + $a * $b', ctx), 9);
+		assert.equal(e('3 + @border-color', ctx), '#141414');
+	});
+
+	// it.only('should invoke functions', function() {
+	// 	var ctx = new Context({
+	// 		'foo': function(num) {
+	// 			return num.value * 3;
+	// 		}
+	// 	});
+
+	// 	assert.equal(e('4 + foo(5)', ctx), '19');
+	// 	assert.equal(e('4 + foo(5, 6)', ctx), '19');
+
+	// 	// assert.equal(e('bar(5, foo)', ctx), 'bar(5, foo)');
+	// 	// assert.equal(e('foo', ctx), 'foo');
+	// });
 });
