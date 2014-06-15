@@ -50,7 +50,7 @@ describe('CSS Expression', function() {
 		assert.equal(e('3 + @border-color', ctx), '#141414');
 	});
 
-	it.only('should invoke functions', function() {
+	it('should invoke functions', function() {
 		var ctx = new Context({
 			'@a': 2, '@b': 4,
 			'foo': function(num) {
@@ -66,5 +66,19 @@ describe('CSS Expression', function() {
 		assert.equal(e('bar(@a, @b)', ctx), 'bar(2, 4)');
 		assert.equal(e('bar(@a, @b, foo(5))', ctx), 'bar(2, 4, 15)');
 		assert.equal(e('foo', ctx), 'foo');
+	});
+
+	it('should handle implicit color/variable conversion', function() {
+		// There's `red()` function as well as `red` keyword as color.
+		// Expression resolver should properly detect both cases
+		var ctx = new Context();
+		assert.equal(e('red', ctx), 'red');
+
+		// in case of keywords, algebra behaviour is undefined
+		assert.equal(e('red + blue', ctx), 'redblue');
+		assert.equal(e('red + 3', ctx), 'red3');
+
+		assert.equal(e('red(#fc0)', ctx), '255');
+		assert.equal(e('red(#fc0) + green(#fc0)', ctx), '459');
 	});
 });
