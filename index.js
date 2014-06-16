@@ -1,19 +1,30 @@
-var parser = require('./lib/parser');
-var evaluator = require('./lib/evaluator');
-var patcher = require('./lib/patcher');
+if (typeof module === 'object' && typeof define !== 'function') {
+	var define = function (factory) {
+		module.exports = factory(require, exports, module);
+	};
+}
 
-module.exports = function(expr, context) {
-	return evaluator(expr, context).valueOf();
-};
+define(function(require, exports, module) {
+	var parser = require('./lib/parser');
+	var evaluator = require('./lib/evaluator');
+	var patcher = require('./lib/patcher');
+	var split = require('./lib/split');
+	
+	var out = function(expr, context) {
+		return evaluator(expr, context).valueOf();
+	};
 
-module.exports.eval = function(expr, context) {
-	return evaluator(expr, context);
-};
+	out.eval = function(expr, context) {
+		return evaluator(expr, context);
+	};
 
-module.exports.tokenize = function(expr) {
-	return parser.parse(expr);
-};
+	out.tokenize = function(expr) {
+		return parser.parse(expr);
+	};
 
-module.exports.patch = function(expr, value) {
-	return patcher.patch(expr, value);
-};
+	out.patch = function(expr, value) {
+		return patcher.patch(expr, value);
+	};
+
+	return out;
+});
