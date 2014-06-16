@@ -44,4 +44,52 @@ describe('Expression Patcher', function() {
 		assert.equal(v('#000'), 0);
 		assert.equal(v('#010'), parseInt('11', 16) << 8);
 	});
+
+	it('should modify safe token', function() {
+		var r = function(expr, replacement) {
+			return patcher.patch(expr, replacement);
+		};
+
+		// single value
+		assert.equal(r('1px', '2px'), '2px');
+		assert.equal(r('-1px', '2px'), '2px');
+		assert.equal(r('#fc0', 'red'), 'red');
+
+		// unknown token, can’t be safe
+		assert.equal(r('foo', 'red'), null);
+		
+		assert.equal(r('1 + 2', '3'), '1 + 3');
+		assert.equal(r('1 + 2 - 3', '-4'), '1 + 2 - 4');
+		assert.equal(r('1 + 2 - a', '10'), '1 + 10 - a');
+		assert.equal(r('1 - a', '5'), '5 - a');
+		assert.equal(r('(1 - a)', '5'), '(5 - a)');
+		assert.equal(r('(1 - a) + 2', '100'), '(1 - a) + 100');
+		assert.equal(r('(1 - a) + b', '200'), '(200 - a) + b');
+		assert.equal(r('c(1 - a) + 2', '3'), 'c(1 - a) + 3');
+		assert.equal(r('c(1 - a) + 2 - b(3)', '4'), 'c(1 - a) + 4 - b(3)');
+		assert.equal(r('c(1 - a) + 2 - b(3/2)', '5'), 'c(1 - a) + 5 - b(3/2)');
+		assert.equal(r('c(1 - a) + 2 - b(3/2, 8)', '5'), 'c(1 - a) + 5 - b(3/2, 8)');
+
+		// work with sign change
+		assert.equal(r('1 + 2', '-2'), '1 - 2');
+		assert.equal(r('1 - 2', '3'), '1 + 3');
+		assert.equal(r('1 - a', '3'), '3 - a');
+		assert.equal(r('1 - a', '-3'), '-3 - a');
+		assert.equal(r('1 + a', '-3'), '-3 + a');
+		assert.equal(r('-1 + a', '-3'), '-3 + a');
+		assert.equal(r('-1 + a', '3'), '3 + a');
+
+		// replace with zero
+		assert.equal(r('1 + 2', '0'), '1');
+		assert.equal(r('1 - 2', '0'), '1');
+		assert.equal(r('a + 2', '0'), 'a');
+		assert.equal(r('1 + a', '0'), 'a');
+		assert.equal(r('-1 + a', '0'), 'a');
+		assert.equal(r('-1 - a', '0'), '-a');
+
+		// work with colors
+		assert.equal(r('#fff + a', '#bc3'), '#bc3 + a');
+		assert.equal(r('a + #fff', '#bc3'), 'a + #bc3');
+		assert.equal(r('a + #fff', '-#bc3'), 'a - #bc3');
+	});
 });

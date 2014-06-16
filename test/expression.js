@@ -22,6 +22,17 @@ describe('CSS Expression', function() {
 		assert.equal(e('100% / 4'), '25%');
 	});
 
+	it('should work with comparison operators', function() {
+		assert.equal(e('1 < 2'), true);
+		assert.equal(e('1 > 2'), false);
+		assert.equal(e('1 = 1'), true);
+		assert.equal(e('2 + 2 = 2 * 2'), true);
+		assert.equal(e('2 + 2 <= 2 * 2'), true);
+		assert.equal(e('2 + 2 >= 2 * 2'), true);
+		assert.equal(e('2 + 3 = 2 * 2'), false);
+		assert.equal(e('2 + 3 != 2 * 2'), true);
+	});
+
 	it('should evaluate colors', function() {
 		assert.equal(e('#fc0'), '#ffcc00');
 		assert.equal(e('#111 + #222'), '#333333');
