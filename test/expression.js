@@ -34,7 +34,7 @@ describe('CSS Expression', function() {
 	});
 
 	it('should evaluate colors', function() {
-		assert.equal(e('#fc0'), '#ffcc00');
+		assert.equal(e('#fc0'), '#fc0'); // simple expression, not evaluated
 		assert.equal(e('#111 + #222'), '#333333');
 		assert.equal(e('#111 > #222'), false);
 		assert.equal(e('#111 + 2'), '#131313');
