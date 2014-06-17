@@ -47,7 +47,7 @@ describe('Expression Patcher', function() {
 
 	it('should modify safe token', function() {
 		var r = function(expr, replacement) {
-			return patcher.patch(expr, replacement);
+			return patcher.replaceSafeToken(expr, replacement);
 		};
 
 		// single value
