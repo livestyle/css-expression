@@ -92,4 +92,21 @@ describe('Expression Patcher', function() {
 		assert.equal(r('a + #fff', '#bc3'), 'a + #bc3');
 		assert.equal(r('a + #fff', '-#bc3'), 'a - #bc3');
 	});
+
+	it('should modify expression', function() {
+		var ctx = new Context({a: 10, b: 11, c: 12});
+		var p = function(expr, expected) {
+			var result = patcher.patch(expr, ctx, expected);
+			return result ? result.expression : undefined;
+		};
+
+		assert.equal(p('a', 10), 'a'); // no change: results are equal
+		assert.equal(p('a', 11), 'a + 1');
+		assert.equal(p('a + 1', 12), 'a + 2');
+		assert.equal(p('a + b', 22), 'a + b + 1');
+		
+		assert.equal(p('a + 3px', '9px'), 'a - 1px');
+		assert.equal(p('a + 3px', '9em'), '9em'); // unit mismatch, replace value
+		assert.equal(p('a + 3px', '#000013'), '#000013'); // type mismatch, replace value
+	});
 });
