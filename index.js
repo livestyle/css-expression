@@ -12,7 +12,6 @@ define(function(require, exports, module) {
 	var Context = require('./lib/context');
 
 	var reImportant = /\!important\s*$/;
-	var reComplexValue = /[\(\+\-\*\/=<>\!\)@\$]/;
 
 	var out = function(expr, context) {
 		var important = '';
@@ -21,24 +20,14 @@ define(function(require, exports, module) {
 			important = ' !important';
 		}
 
-		if (!Array.isArray(expr)) {
-			expr = split(expr);
-		}
-
-		context = Context.create(context);
-		var out = expr.map(function(part) {
-			return reComplexValue.test(part) 
-				? evaluator(part, context).valueOf()
-				: part;
-		});
+		var result = evaluator(expr, Context.create(context)).valueOf();
 
 		// respect output object type in case of single expression
-		out = out.length > 1 ? out.join(' ') : out[0];
 		if (important) {
-			out += important;
+			result += important;
 		}
 
-		return out;
+		return result;
 	};
 
 	out.eval = function(expr, context) {
