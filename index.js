@@ -13,7 +13,7 @@ define(function(require, exports, module) {
 
 	var reImportant = /\!important\s*$/;
 	var reComplexValue = /[\(\+\-\*\/=<>\!\)@\$]/;
-	
+
 	var out = function(expr, context) {
 		var important = '';
 		if (reImportant.test(expr)) {
@@ -25,6 +25,7 @@ define(function(require, exports, module) {
 			expr = split(expr);
 		}
 
+		context = Context.create(context);
 		var out = expr.map(function(part) {
 			return reComplexValue.test(part) 
 				? evaluator(part, context).valueOf()
@@ -41,7 +42,7 @@ define(function(require, exports, module) {
 	};
 
 	out.eval = function(expr, context) {
-		return evaluator(expr, context);
+		return evaluator(expr, Context.create(context));
 	};
 
 	out.tokenize = function(expr) {
@@ -49,15 +50,7 @@ define(function(require, exports, module) {
 	};
 
 	out.patch = function(expr, context, expected, actual) {
-		return patcher.patch(expr, context, expected, actual);
-	};
-
-	out.createContext = function(scope) {
-		if (scope instanceof Context) {
-			return scope;
-		}
-		
-		return new Context(scope);
+		return patcher.patch(expr, Context.create(context), expected, actual);
 	};
 
 	out.Context = Context;
