@@ -56,7 +56,7 @@ define(function(require, exports, module) {
 		return new Context();
 	};
 
+	out.Context = Context;
 	out.split = split;
-
 	return out;
 });
