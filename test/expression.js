@@ -92,4 +92,10 @@ describe('CSS Expression', function() {
 		assert.equal(e('red(#fc0)', ctx), '255');
 		assert.equal(e('red(#fc0) + green(#fc0)', ctx), '459');
 	});
+
+	it('should stringify unknown functions', function() {
+		var ctx = new Context();
+		assert.equal(e('foo()', ctx), 'foo()');
+		assert.equal(e('foo(1 + 2)', ctx), 'foo(3)');
+	});
 });
