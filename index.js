@@ -9,6 +9,7 @@ define(function(require, exports, module) {
 	var evaluator = require('./lib/evaluator');
 	var patcher = require('./lib/patcher');
 	var split = require('./lib/split');
+	var Context = require('./lib/context');
 
 	var reImportant = /\!important\s*$/;
 	var reComplexValue = /[\(\+\-\*\/=<>\!\)@\$]/;
@@ -49,6 +50,10 @@ define(function(require, exports, module) {
 
 	out.patch = function(expr, context, expected, actual) {
 		return patcher.patch(expr, context, expected, actual);
+	};
+
+	out.createContext = function(scope) {
+		return new Context();
 	};
 
 	out.split = split;
