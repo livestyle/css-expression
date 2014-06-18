@@ -47,8 +47,8 @@ define(function(require, exports, module) {
 		return parser.parse(expr);
 	};
 
-	out.patch = function(expr, value) {
-		return patcher.patch(expr, value);
+	out.patch = function(expr, context, expected, actual) {
+		return patcher.patch(expr, context, expected, actual);
 	};
 
 	out.split = split;
