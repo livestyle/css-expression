@@ -53,7 +53,11 @@ define(function(require, exports, module) {
 	};
 
 	out.createContext = function(scope) {
-		return new Context();
+		if (scope instanceof Context) {
+			return scope;
+		}
+		
+		return new Context(scope);
 	};
 
 	out.Context = Context;
