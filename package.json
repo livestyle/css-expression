@@ -1,6 +1,6 @@
 {
-  "name": "css-expression",
-  "version": "0.0.0",
+  "name": "emmet-css-expression",
+  "version": "1.0.0",
   "description": "Expression parser and evaluator for CSS preprocessors",
   "main": "index.js",
   "scripts": {
