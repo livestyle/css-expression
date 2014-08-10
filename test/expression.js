@@ -98,4 +98,10 @@ describe('CSS Expression', function() {
 		assert.equal(e('foo()', ctx), 'foo()');
 		assert.equal(e('foo(1 + 2)', ctx), 'foo(3)');
 	});
+
+	it('expressions with comma', function() {
+		assert.equal(e('1, 2'), '1, 2');
+		assert.equal(e('1 + 2, 4'), '3, 4');
+		assert.equal(e('2, 3 * 4'), '2, 12');
+	});
 });
