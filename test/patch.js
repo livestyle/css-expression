@@ -4,7 +4,7 @@ var parser = require('../lib/parser');
 var Context = require('../lib/context');
 
 describe('Expression Patcher', function() {
-	it('should find safe token', function() {
+	it('find safe token', function() {
 		var ctx = new Context({a: 10, b: 11, c: 12});
 		var t = function(expr) {
 			var safeToken = patcher.findSafeToken(parser.parse(expr));
@@ -45,7 +45,7 @@ describe('Expression Patcher', function() {
 		assert.equal(v('#010'), parseInt('11', 16) << 8);
 	});
 
-	it('should modify safe token', function() {
+	it('modify safe token', function() {
 		var r = function(expr, replacement) {
 			return patcher.replaceSafeToken(expr, replacement);
 		};
@@ -93,7 +93,7 @@ describe('Expression Patcher', function() {
 		assert.equal(r('a + #fff', '-#bc3'), 'a - #bc3');
 	});
 
-	it('should modify expression', function() {
+	it('modify expression', function() {
 		var ctx = new Context({a: 10, b: 11, c: 12});
 		var p = function(expr, expected) {
 			var result = patcher.patch(expr, ctx, expected);

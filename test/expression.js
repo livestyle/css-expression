@@ -3,7 +3,7 @@ var e = require('../index');
 var Context = require('../lib/context');
 
 describe('CSS Expression', function() {
-	it('should evaluate simple math expressions', function() {
+	it('simple math', function() {
 		assert.equal(e('1+2'), 3);
 		assert.equal(e('1 + 2'), 3);
 		assert.equal(e('1 - 2'), -1);
@@ -22,7 +22,7 @@ describe('CSS Expression', function() {
 		assert.equal(e('100% / 4'), '25%');
 	});
 
-	it('should work with comparison operators', function() {
+	it('comparison operators', function() {
 		assert.equal(e('1 < 2'), true);
 		assert.equal(e('1 > 2'), false);
 		assert.equal(e('1 = 1'), true);
@@ -33,7 +33,7 @@ describe('CSS Expression', function() {
 		assert.equal(e('2 + 3 != 2 * 2'), true);
 	});
 
-	it('should evaluate colors', function() {
+	it('colors', function() {
 		assert.equal(e('#fc0'), '#ffcc00');
 		assert.equal(e('#111 + #222'), '#333333');
 		assert.equal(e('#111 > #222'), false);
@@ -46,7 +46,7 @@ describe('CSS Expression', function() {
 		assert.equal(e('3 * #111'), '#333333');
 	});
 
-	it('should work with variables', function() {
+	it('variables', function() {
 		var ctx = new Context({
 			'@a': 2, '@b': 4,
 			'$a': 2, '$b': 4,
@@ -61,7 +61,7 @@ describe('CSS Expression', function() {
 		assert.equal(e('3 + @border-color', ctx), '#141414');
 	});
 
-	it('should invoke functions', function() {
+	it('functions', function() {
 		var ctx = new Context({
 			'@a': 2, '@b': 4,
 			'foo': function(num) {
@@ -79,7 +79,7 @@ describe('CSS Expression', function() {
 		assert.equal(e('foo', ctx), 'foo');
 	});
 
-	it('should handle implicit color/variable conversion', function() {
+	it('implicit color/variable conversion', function() {
 		// There's `red()` function as well as `red` keyword as color.
 		// Expression resolver should properly detect both cases
 		var ctx = new Context();
@@ -93,7 +93,7 @@ describe('CSS Expression', function() {
 		assert.equal(e('red(#fc0) + green(#fc0)', ctx), '459');
 	});
 
-	it('should stringify unknown functions', function() {
+	it('stringify unknown functions', function() {
 		var ctx = new Context();
 		assert.equal(e('foo()', ctx), 'foo()');
 		assert.equal(e('foo(1 + 2)', ctx), 'foo(3)');
