@@ -52,7 +52,8 @@ describe('CSS Expression', function() {
 			'@a': 2, '@b': 4,
 			'$a': 2, '$b': 4,
 			'@c': '@a + @b',
-			'@border-color': '#111'
+			'@border-color': '#111',
+			'a': 1
 		});
 
 		assert.equal(e('@a + @b', ctx), 6);
@@ -60,6 +61,7 @@ describe('CSS Expression', function() {
 		assert.equal(e('1 + @a * @b', ctx), 9);
 		assert.equal(e('1 + $a * $b', ctx), 9);
 		assert.equal(e('3 + @border-color', ctx), '#141414');
+		assert.equal(e('a >= 0', ctx), true);
 	});
 
 	it('functions', function() {
