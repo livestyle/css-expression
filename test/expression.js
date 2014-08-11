@@ -28,6 +28,7 @@ describe('CSS Expression', function() {
 		assert.equal(e('1 = 1'), true);
 		assert.equal(e('2 + 2 = 2 * 2'), true);
 		assert.equal(e('2 + 2 <= 2 * 2'), true);
+		assert.equal(e('2 + 2 =< 2 * 2'), true); // LESS
 		assert.equal(e('2 + 2 >= 2 * 2'), true);
 		assert.equal(e('2 + 3 = 2 * 2'), false);
 		assert.equal(e('2 + 3 != 2 * 2'), true);
