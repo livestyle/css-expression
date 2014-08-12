@@ -114,4 +114,9 @@ describe('CSS Expression', function() {
 		assert.equal(e('1px = 1%'), false);
 		assert.equal(e('1px = 1'), true);
 	});
+
+	it('string equality', function() {
+		assert.equal(e('"a" = "a"'), true);
+		assert.equal(e('"a" = \'a\''), false);
+	});
 });
