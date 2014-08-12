@@ -107,4 +107,11 @@ describe('CSS Expression', function() {
 		assert.equal(e('1 + 2, 4'), '3, 4');
 		assert.equal(e('2, 3 * 4'), '2, 12');
 	});
+
+	it('unit equality', function() {
+		assert.equal(e('1 = 1'), true);
+		assert.equal(e('1 = 2'), false);
+		assert.equal(e('1px = 1%'), false);
+		assert.equal(e('1px = 1'), true);
+	});
 });
