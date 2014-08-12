@@ -117,6 +117,6 @@ describe('CSS Expression', function() {
 
 	it('string equality', function() {
 		assert.equal(e('"a" = "a"'), true);
-		assert.equal(e('"a" = \'a\''), false);
+		assert.equal(e('"a" = \'a\''), true);
 	});
 });
