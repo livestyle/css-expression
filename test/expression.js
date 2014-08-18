@@ -80,6 +80,9 @@ describe('CSS Expression', function() {
 		assert.equal(e('bar(@a, @b)', ctx), 'bar(2, 4)');
 		assert.equal(e('bar(@a, @b, foo(5))', ctx), 'bar(2, 4, 15)');
 		assert.equal(e('foo', ctx), 'foo');
+
+		assert.equal(e('url("a.png")'), 'url("a.png")');
+		assert.equal(e('url("a.png", 3px, 0)'), 'url("a.png", 3px, 0)');
 	});
 
 	it('implicit color/variable conversion', function() {
