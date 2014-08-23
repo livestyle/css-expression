@@ -62,6 +62,8 @@ describe('CSS Expression', function() {
 		assert.equal(e('1 + $a * $b', ctx), 9);
 		assert.equal(e('3 + @border-color', ctx), '#141414');
 		assert.equal(e('a >= 0', ctx), true);
+		
+		assert.equal(e('@a + @d', ctx), '2@d'); // unknown variable
 	});
 
 	it('functions', function() {
