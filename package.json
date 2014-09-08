@@ -1,5 +1,5 @@
 {
-  "name": "emmet-css-expression",
+  "name": "livestyle-css-expression",
   "version": "1.0.0",
   "description": "Expression parser and evaluator for CSS preprocessors",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:emmetio/css-expression.git"
+    "url": "git@github.com:livestyle/css-expression.git"
   },
   "keywords": [
     "css",
@@ -17,9 +17,9 @@
   "author": "Sergey Chikuyonok <serge.che@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/emmetio/css-expression/issues"
+    "url": "https://github.com/livestyle/css-expression/issues"
   },
-  "homepage": "https://github.com/emmetio/css-expression",
+  "homepage": "https://github.com/livestyle/css-expression",
   "devDependencies": {
     "mocha": "^1.20.1"
   },
