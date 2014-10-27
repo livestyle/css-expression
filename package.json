@@ -1,6 +1,6 @@
 {
   "name": "livestyle-css-expression",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Expression parser and evaluator for CSS preprocessors",
   "main": "index.js",
   "scripts": {

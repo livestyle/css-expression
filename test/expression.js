@@ -48,12 +48,15 @@ describe('CSS Expression', function() {
 	});
 
 	it('variables', function() {
+		var log = [];
 		var ctx = new Context({
 			'@a': 2, '@b': 4,
 			'$a': 2, '$b': 4,
 			'@c': '@a + @b',
 			'@border-color': '#111',
 			'a': 1
+		}, function(message) {
+			log.push(message);
 		});
 
 		assert.equal(e('@a + @b', ctx), 6);
@@ -64,6 +67,7 @@ describe('CSS Expression', function() {
 		assert.equal(e('a >= 0', ctx), true);
 		
 		assert.equal(e('@a + @d', ctx), '2@d'); // unknown variable
+		assert.deepEqual(log, ['Missing variable "@d"']);
 	});
 
 	it('functions', function() {
