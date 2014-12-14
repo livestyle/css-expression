@@ -128,4 +128,9 @@ describe('CSS Expression', function() {
 		assert.equal(e('"a" = "a"'), true);
 		assert.equal(e('"a" = \'a\''), true);
 	});
+
+	it('color keywords in functions', function() {
+		assert.equal(e('lighten(red, 10%)'), e('lighten(#f00, 10%)'));
+		assert.equal(e('red(red)'), 255);
+	});
 });
