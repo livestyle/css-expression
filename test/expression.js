@@ -133,4 +133,19 @@ describe('CSS Expression', function() {
 		assert.equal(e('lighten(red, 10%)'), e('lighten(#f00, 10%)'));
 		assert.equal(e('red(red)'), 255);
 	});
+
+	it.only('complex names', function() {
+		var ctx = new Context({
+			'@start': '#EEE',
+			'@stop':  '#FFF'
+		});
+
+		// console.log(e('-webkit-gradient(linear, left bottom, left top, color-stop(0, @start), color-stop(1, @stop))', ctx));
+		// console.log(e('fn(a b)', ctx));
+		console.log(e('fn(10 11 + 2)', ctx));
+		console.log(e('fn(11 + 2 10)', ctx));
+		console.log(e('fn(11 + 2 10 - 1)', ctx));
+		console.log(e('fn(1 11 + 2 + 10 - 1)', ctx));
+		console.log(e('fn(1 (11 + 2) 10 - 1)', ctx));
+	});
 });
