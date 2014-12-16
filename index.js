@@ -1,3 +1,8 @@
+/**
+ * JavaScript expression parser and evaluator, optimized for
+ * CSS preprocessors
+ * Based on https://github.com/silentmatt/js-expression-eval
+ */
 if (typeof module === 'object' && typeof define !== 'function') {
 	var define = function (factory) {
 		module.exports = factory(require, exports, module);
@@ -30,7 +35,7 @@ define(function(require, exports, module) {
 		return result;
 	};
 
-	out.eval = function(expr, context) {
+	out.eval = function(expr, context) { // jshint ignore:line
 		return evaluator(expr, Context.create(context));
 	};
 

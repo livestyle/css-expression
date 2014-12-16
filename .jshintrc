@@ -1,0 +1,7 @@
+{
+	"undef": true,
+	"unused": false,
+	"node": true,
+	"laxbreak": true,
+	"boss": true
+}
