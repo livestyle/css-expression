@@ -89,6 +89,8 @@ describe('CSS Expression', function() {
 
 		assert.equal(e('url("a.png")'), 'url("a.png")');
 		assert.equal(e('url("a.png", 3px, 0)'), 'url("a.png", 3px, 0)');
+
+		assert.equal(e('rgb(@a,@a,@a)', ctx), '#020202');
 	});
 
 	it('implicit color/variable conversion', function() {
