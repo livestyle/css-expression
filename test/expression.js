@@ -145,4 +145,9 @@ describe('CSS Expression', function() {
 	it('vendor prefix', function() {
 		assert.equal(e('-fn(1 - 2)'), '-fn(-1)');
 	});
+
+	it('string interpolation', function() {
+		var ctx = new Context({'@a': 2, '@b': 4});
+		assert.equal(e('e(%("(\'%d\', \'%d\')", @a, @b))', ctx), '(\'2\', \'4\')');
+	});
 });
