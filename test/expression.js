@@ -137,6 +137,7 @@ describe('CSS Expression', function() {
 	});
 
 	it('space operator', function() {
+		assert.equal(e('fn(1px 100%)'), 'fn(1px 100%)');
 		assert.equal(e('fn(a b)'), 'fn(a b)');
 		assert.equal(e('fn(a,b)'), 'fn(a, b)');
 		assert.equal(e('fn(a, b c)'), 'fn(a, b c)');
