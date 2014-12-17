@@ -141,4 +141,8 @@ describe('CSS Expression', function() {
 		assert.equal(e('fn(1 2 + 3, 4 + 5 foo( 1 2 ) bar)'), 'fn(1 5, 9 foo(1 2) bar)');
 		assert.equal(e('1 2 + 3, 4 + 5 foo( 1 2 ) bar'), '1 5, 9 foo(1 2) bar');
 	});
+
+	it('vendor prefix', function() {
+		assert.equal(e('-fn(1 - 2)'), '-fn(-1)');
+	});
 });
