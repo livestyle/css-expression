@@ -134,7 +134,11 @@ describe('CSS Expression', function() {
 		assert.equal(e('red(red)'), 255);
 	});
 
-	it.only('space operator', function() {
-		console.log(e('fn(a b)'));
+	it('space operator', function() {
+		assert.equal(e('fn(a b)'), 'fn(a b)');
+		assert.equal(e('fn(a,b)'), 'fn(a, b)');
+		assert.equal(e('fn(a, b c)'), 'fn(a, b c)');
+		assert.equal(e('fn(1 2 + 3, 4 + 5 foo( 1 2 ) bar)'), 'fn(1 5, 9 foo(1 2) bar)');
+		assert.equal(e('1 2 + 3, 4 + 5 foo( 1 2 ) bar'), '1 5, 9 foo(1 2) bar');
 	});
 });
