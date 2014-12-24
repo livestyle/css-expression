@@ -25,7 +25,7 @@ define(function(require, exports, module) {
 			important = ' !important';
 		}
 
-		var result = evaluator(expr, Context.create(context)).valueOf();
+		var result = out.eval(expr, context).valueOf();
 
 		// respect output object type in case of single expression
 		if (important) {
