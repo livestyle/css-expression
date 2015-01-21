@@ -108,5 +108,6 @@ describe('Expression Patcher', function() {
 		assert.equal(p('a + 3px', '9px'), 'a - 1px');
 		assert.equal(p('a + 3px', '9em'), '9em'); // unit mismatch, replace value
 		assert.equal(p('a + 3px', '#000013'), '#000013'); // type mismatch, replace value
+		assert.equal(p('#fc0', 'rgba(255, 127, 9, 0.5)'), 'rgba(255, 127, 9, 0.5)');
 	});
 });
