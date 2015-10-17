@@ -33,4 +33,11 @@ describe('Functions', function() {
 		assert.equal(e('to-upper-case(@q)', ctx), '"STRING"');
 		assert.equal(e('to-lower-case(HELLO)', ctx), 'hello');
 	});
+
+	it('colors', function() {
+		assert.equal(e('rgba(1,2,3,.5)'), 'rgba(1, 2, 3, 0.5)');
+		assert.equal(e('rgba(red, 0.5)'), 'rgba(255, 0, 0, 0.5)');
+		assert.equal(e('rgba(#fc0, 0.5)'), 'rgba(255, 204, 0, 0.5)');
+		assert.equal(e('rgba(#fc0)'), '#ffcc00');
+	});
 });
