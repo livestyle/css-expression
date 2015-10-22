@@ -82,6 +82,7 @@ describe('CSS Expression', function() {
 	it('functions', function() {
 		var ctx = new Context({
 			'@a': 2, '@b': 4,
+			'@color': '#fc0',
 			'foo': function(num) {
 				return num.value * 3;
 			}
@@ -101,6 +102,7 @@ describe('CSS Expression', function() {
 		assert.equal(e('url(image.png)'), 'url(image.png)');
 
 		assert.equal(e('rgb(@a,@a,@a)', ctx), '#020202');
+		assert.equal(e('fade(@color, 0.5)', ctx), 'rgba(255, 204, 0, 0.5)');
 	});
 
 	it('implicit color/variable conversion', function() {
@@ -186,4 +188,14 @@ describe('CSS Expression', function() {
 		var ctx = new Context({'@a': 2, '@b': 4});
 		assert.equal(e('e(%("(\'%d\', \'%d\')", @a, @b))', ctx), '(\'2\', \'4\')');
 	});
+
+	it('issue 27', function() {
+		var ctx = new Context({'@color': '#fc0'});
+		assert.equal(e('fade(@color, 0)', ctx), 'rgba(255, 204, 0, 0)');
+		assert.equal(e('fade(black, 0)', ctx), 'transparent');
+		assert.equal(
+			e('linear-gradient(to bottom, @color 0%, @color 33%, fade(@color, 0.65) 67%, fade(@color, 0) 100%)', ctx), 
+			'linear-gradient(to bottom, #ffcc00 0%, #ffcc00 33%, rgba(255, 204, 0, 0.65) 67%, rgba(255, 204, 0, 0) 100%)'
+		);
+	})
 });
