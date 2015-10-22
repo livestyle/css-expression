@@ -13,12 +13,21 @@ describe('CSS Expression', function() {
 		assert.equal(e('((1 + 2) * 3) / 9'), 1);
 		assert.equal(e('-3 + 2'), -1);
 		assert.equal(e('6 / -2'), -3);
+		assert.equal(e('6/-2'), -3);
 
 		assert.equal(e('1'), 1);
 		assert.equal(e('1 + 2 * 4'), 9);
 		assert.equal(e('1em'), '1em');
+		
 		assert.equal(e('1em + 2'), '3em');
+		assert.equal(e('1em+2'), '3em');
+
+		assert.equal(e('1em - 2'), '-1em');
+		assert.equal(e('1em-2'), '-1em');
+		
 		assert.equal(e('1em + 2px'), '3em');
+		assert.equal(e('1em+2px'), '3em');
+
 		assert.equal(e('100% / 4'), '25%');
 	});
 
@@ -138,6 +147,29 @@ describe('CSS Expression', function() {
 	});
 
 	it('space operator', function() {
+		var ctx = new Context({
+			'@a': 2, '@b': 4,
+			'$a': 2, '$b': 4,
+			'$c': -123
+		});
+
+		assert.equal(e('-1px -3px'), '-1px -3px');
+		assert.equal(e('-1px 3px'), '-1px 3px');
+		assert.equal(e('  -1px   -3px   '), '-1px -3px');
+		assert.equal(e('-1px-3px   '), '-4px');
+
+		assert.equal(e('-@a -@b', ctx), '-2 -4');
+		assert.equal(e('-@a @b', ctx), '-2 4');
+		assert.equal(e('   -@a    -@b   ', ctx), '-2 -4');
+
+		assert.throws(function() {
+			// dash is a valid variable name
+			e('-@a-@b', ctx);
+		}, /unexpected\s+variable/i);
+
+		assert.equal(e('-$a -$b', ctx), '-2 -4');
+		assert.equal(e('-3px $c', ctx), '-3px -123');
+
 		assert.equal(e('fn(1px 100%)'), 'fn(1px 100%)');
 		assert.equal(e('fn(a b)'), 'fn(a b)');
 		assert.equal(e('fn(a,b)'), 'fn(a, b)');
