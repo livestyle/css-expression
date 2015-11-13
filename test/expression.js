@@ -75,7 +75,9 @@ describe('CSS Expression', function() {
 		assert.equal(e('3 + @border-color', ctx), '#141414');
 		assert.equal(e('a >= 0', ctx), true);
 		
-		assert.equal(e('@a + @d', ctx), '2@d'); // unknown variable
+		assert.throws(function() {
+			e('@a + @d', ctx);  // unknown variable
+		}, /NaN/)
 		assert.deepEqual(log, ['Missing variable "@d"']);
 	});
 
@@ -112,8 +114,8 @@ describe('CSS Expression', function() {
 		assert.equal(e('red', ctx), 'red');
 
 		// in case of keywords, algebra behaviour is undefined
-		assert.equal(e('red + blue', ctx), 'redblue');
-		assert.equal(e('red + 3', ctx), 'red3');
+		assert.throws(function() {e('red + blue', ctx);}, /NaN/);
+		assert.throws(function() {e('red + 3', ctx);}, /NaN/);
 
 		assert.equal(e('red(#fc0)', ctx), '255');
 		assert.equal(e('red(#fc0) + green(#fc0)', ctx), '459');
@@ -123,6 +125,13 @@ describe('CSS Expression', function() {
 		var ctx = new Context();
 		assert.equal(e('foo()', ctx), 'foo()');
 		assert.equal(e('foo(1 + 2)', ctx), 'foo(3)');
+	});
+
+	it('stringify invalid expressions (issue 58)', function() {
+		var ctx = new Context();
+		assert.throws(function() {
+			e('url(path/to/image.jpg)', ctx)
+		}, /NaN/);
 	});
 
 	it('expressions with comma', function() {

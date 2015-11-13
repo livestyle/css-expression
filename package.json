@@ -21,10 +21,10 @@
   },
   "homepage": "https://github.com/livestyle/css-expression",
   "devDependencies": {
-    "jshint": "^2.5.10",
-    "mocha": "^1.20.1"
+    "jshint": "^2.8.0",
+    "mocha": "^2.3.3"
   },
   "dependencies": {
-    "string-stream": "git+https://github.com/emmetio/string-stream.git#v1.0.0"
+    "string-stream": "emmetio/string-stream.git#v1.0.0"
   }
 }
