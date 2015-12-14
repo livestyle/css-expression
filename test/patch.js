@@ -111,4 +111,15 @@ describe('Expression Patcher', function() {
 		assert.equal(p('a + 3px', '#000013'), '#000013'); // type mismatch, replace value
 		assert.equal(p('#fc0', 'rgba(255, 127, 9, 0.5)'), 'rgba(255, 127, 9, 0.5)');
 	});
+
+	it('patch color', function() {
+		var ctx = new Context({'$main-color': '#000'});
+		var p = function(expr, expected) {
+			var result = patcher.patch(expr, ctx, expected);
+			return result ? result.expression : undefined;
+		};
+
+		assert.equal(p('$main-color', '#ccc'), '$main-color + #cccccc');
+		assert.equal(p('$main-color + #cccccc', '#111'), '$main-color + #111111');
+	});
 });
