@@ -206,5 +206,36 @@ describe('CSS Expression', function() {
 			e('linear-gradient(to bottom, @color 0%, @color 33%, fade(@color, 0.65) 67%, fade(@color, 0) 100%)', ctx), 
 			'linear-gradient(to bottom, #ffcc00 0%, #ffcc00 33%, rgba(255, 204, 0, 0.65) 67%, rgba(255, 204, 0, 0) 100%)'
 		);
-	})
+	});
+
+	it('issue 70', function() {
+		// https://github.com/livestyle/issues/issues/70
+		
+		// no magic
+		var ctx1 = new Context({'@a': '28px', '@b': '35px'});
+		assert.equal(e('28px/35px', ctx1), '0.8px');
+		assert.equal(e('@a/@b', ctx1), '0.8px');
+		assert.equal(e('@a/35px', ctx1), '0.8px');
+		assert.equal(e('28px/@b', ctx1), '0.8px');
+		assert.equal(e('28px / 35px', ctx1), '0.8px');
+		assert.equal(e('@a / @b', ctx1), '0.8px');
+
+		// magic mode 1: concat if no spaces
+		var ctx2 = new Context({'@a': '28px', '@b': '35px', '%magic-div': 1});
+		assert.equal(e('28px/35px', ctx2), '28px/35px');
+		assert.equal(e('@a/@b', ctx2), '28px/35px');
+		assert.equal(e('@a/35px', ctx2), '28px/35px');
+		assert.equal(e('28px/@b', ctx2), '28px/35px');
+		assert.equal(e('28px / 35px', ctx2), '0.8px');
+		assert.equal(e('@a / @b', ctx2), '0.8px');
+
+		// magic mode 2: concat if no spaces and plain values
+		var ctx3 = new Context({'@a': '28px', '@b': '35px', '%magic-div': 2});
+		assert.equal(e('28px/35px', ctx3), '28px/35px');
+		assert.equal(e('@a/@b', ctx3), '0.8px');
+		assert.equal(e('@a/35px', ctx3), '0.8px');
+		assert.equal(e('28px/@b', ctx3), '0.8px');
+		assert.equal(e('28px / 35px', ctx3), '0.8px');
+		assert.equal(e('@a / @b', ctx3), '0.8px');
+	});
 });

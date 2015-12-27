@@ -36,7 +36,14 @@ define(function(require, exports, module) {
 	};
 
 	out.eval = function(expr, context) { // jshint ignore:line
-		return evaluator(expr, Context.create(context));
+		context = Context.create(context);
+		// preserve original expression in context
+		if (typeof expr === 'string') {
+			context._expression = expr;
+		} else if (Array.isArray(expr) && expr.expression) {
+			context._expression = expr.expression;
+		}
+		return evaluator(expr, context);
 	};
 
 	out.tokenize = function(expr) {
