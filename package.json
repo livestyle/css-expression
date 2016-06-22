@@ -23,8 +23,5 @@
   "devDependencies": {
     "jshint": "^2.8.0",
     "mocha": "^2.3.3"
-  },
-  "dependencies": {
-    "string-stream": "emmetio/string-stream.git#v1.0.0"
   }
 }
