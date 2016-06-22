@@ -4,7 +4,7 @@
   "description": "Expression parser and evaluator for CSS preprocessors",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/jshint && ./node_modules/.bin/mocha --reporter spec"
+    "test": "jshint && mocha --reporter spec"
   },
   "repository": {
     "type": "git",
